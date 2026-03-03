@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import styles from './FeedbackForm.module.scss'
+import styles from './FeedbackForm.module.scss';
 import { HappyIcon } from '../../icons/HappyIcon';
 import { SadIcon } from '../../icons/SadIcon';
 import { useSubmitFeedback } from '../../hooks/useSubmitFeedback';
@@ -10,10 +10,7 @@ export interface FeedbackFormProps {
   token: string;
 }
 
-export function FeedbackForm({
-  title = "How do you like the app so far?",
-  token
-}: FeedbackFormProps) {
+export function FeedbackForm({ title = 'How do you like the app so far?', token }: FeedbackFormProps) {
   const [positiveOpen, setPositiveOpen] = useState(false);
   const [negativeOpen, setNegativeOpen] = useState(false);
   const [positiveFeedback, setPositiveFeedback] = useState('');
@@ -38,7 +35,7 @@ export function FeedbackForm({
     try {
       await submitFeedback({
         sentiment: 'positive',
-        content: positiveFeedback,
+        message: positiveFeedback,
       });
     } catch (error) {
       // Error is already handled by the hook
@@ -50,7 +47,7 @@ export function FeedbackForm({
     try {
       await submitFeedback({
         sentiment: 'negative',
-        content: negativeFeedback,
+        message: negativeFeedback,
       });
     } catch (error) {
       // Error is already handled by the hook
@@ -104,9 +101,7 @@ export function FeedbackForm({
           <Dialog.Backdrop className={styles.backdrop} />
           <Dialog.Viewport className={styles.viewport}>
             <Dialog.Popup className={styles.popup}>
-              <Dialog.Title className={styles.dialogTitle}>
-                What do you like?
-              </Dialog.Title>
+              <Dialog.Title className={styles.dialogTitle}>What do you like?</Dialog.Title>
               <Dialog.Description className={styles.dialogDescription}>
                 Tell us what you're enjoying about the app
               </Dialog.Description>
@@ -119,9 +114,7 @@ export function FeedbackForm({
                   rows={5}
                 />
                 <div className={styles.dialogActions}>
-                  <Dialog.Close className={styles.cancelButton}>
-                    Cancel
-                  </Dialog.Close>
+                  <Dialog.Close className={styles.cancelButton}>Cancel</Dialog.Close>
                   <button type="submit" className={styles.submitButton} disabled={isLoading}>
                     {isLoading ? 'Submitting...' : 'Submit'}
                   </button>
@@ -138,9 +131,7 @@ export function FeedbackForm({
           <Dialog.Backdrop className={styles.backdrop} />
           <Dialog.Viewport className={styles.viewport}>
             <Dialog.Popup className={styles.popup}>
-              <Dialog.Title className={styles.dialogTitle}>
-                What don't you like?
-              </Dialog.Title>
+              <Dialog.Title className={styles.dialogTitle}>What don't you like?</Dialog.Title>
               <Dialog.Description className={styles.dialogDescription}>
                 Help us improve by sharing what's not working for you
               </Dialog.Description>
@@ -153,9 +144,7 @@ export function FeedbackForm({
                   rows={5}
                 />
                 <div className={styles.dialogActions}>
-                  <Dialog.Close className={styles.cancelButton}>
-                    Cancel
-                  </Dialog.Close>
+                  <Dialog.Close className={styles.cancelButton}>Cancel</Dialog.Close>
                   <button type="submit" className={styles.submitButton} disabled={isLoading}>
                     {isLoading ? 'Submitting...' : 'Submit'}
                   </button>

@@ -1,73 +1,78 @@
-# React + TypeScript + Vite
+# @usermap/sdk-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The official React SDK for [Usermap](https://usermap.app) — finally start listening to your users.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install @usermap/sdk-react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> **Note:** This package has peer dependencies on `react` and `react-dom` (v19+).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Quick Start
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Import the `FeedbackForm` component and render it anywhere in your app. To start collecting feedback, create an **api token** in the [Usermap dashboard](https://usermap.app).
+
+```tsx
+import { FeedbackForm } from '@usermap/sdk-react';
+
+function App() {
+  return <FeedbackForm token="your-api-key" />;
+}
 ```
+
+That's it! Your users will see a compact feedback widget. Clicking a button immediately submits the sentiment, then opens a dialog where the user can optionally add a quick message.
+
+## Components
+
+### `<FeedbackForm />`
+
+A self-contained feedback widget with built-in dialogs for collecting user sentiment and optional written feedback.
+
+| Prop    | Type     | Required | Default                             | Description                                    |
+| ------- | -------- | -------- | ----------------------------------- | ---------------------------------------------- |
+| `token` | `string` | ✅       | —                                   | Your Usermap product token for authentication. |
+| `title` | `string` | —        | `"How do you like the app so far?"` | The prompt displayed next to the buttons.      |
+
+#### Example with custom title
+
+```tsx
+<FeedbackForm token="your-product-token" title="Enjoying this feature?" />
+```
+
+## Hooks
+
+### `useSubmitFeedback`
+
+If you want full control over the UI, you can use the `useSubmitFeedback` hook directly to submit feedback to the Usermap API.
+
+```tsx
+import { useState } from 'react';
+import { useSubmitFeedback } from '@usermap/sdk-react';
+
+function CustomFeedback() {
+  const [message, setMessage] = useState('');
+  const { submitFeedback, isLoading } = useSubmitFeedback({
+    token: 'your-api-key',
+    onSuccess: () => {
+      setMessage('');
+      console.log('Feedback sent!');
+    },
+    onError: (err) => console.error(err),
+  });
+
+  return (
+    <div>
+      <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Your feedback..." />
+      <button disabled={isLoading} onClick={() => submitFeedback({ sentiment: 'positive', message })}>
+        {isLoading ? 'Sending...' : '👍 Send Feedback'}
+      </button>
+    </div>
+  );
+}
+```
+
+## License
+
+MIT

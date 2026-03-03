@@ -1,12 +1,12 @@
-import './App.css'
-import { FeedbackForm } from "../lib/components/FeedbackForm/FeedbackForm";
+import './App.css';
+import { FeedbackForm } from '../lib/components/FeedbackForm/FeedbackForm';
 
 function App() {
   return (
     <>
-      <FeedbackForm token='admintoken' />
+      <FeedbackForm token="um_IBuohDgDKh2zRrv3wRYmRvnvpFwgrjfPsXSZ1BfU" />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

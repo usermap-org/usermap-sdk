@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 interface FeedbackData {
   sentiment: 'positive' | 'negative';
-  content?: string;
+  message?: string;
+  userEmail?: string;
 }
 
 interface UseSubmitFeedbackOptions {
@@ -24,7 +25,7 @@ export const useSubmitFeedback = ({ token, onSuccess, onError }: UseSubmitFeedba
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
