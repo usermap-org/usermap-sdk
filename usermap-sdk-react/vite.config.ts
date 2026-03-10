@@ -23,7 +23,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: ['react', 'react/jsx-runtime', '@usermap/sdk-core'],
       input: Object.fromEntries(
         // https://rollupjs.org/configuration-options/#input
         glob

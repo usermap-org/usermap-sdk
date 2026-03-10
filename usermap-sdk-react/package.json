@@ -1,6 +1,6 @@
 {
   "name": "@usermap/sdk-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "private": false,
   "scripts": {
@@ -40,6 +40,7 @@
     "vite-plugin-lib-inject-css": "^2.2.2"
   },
   "dependencies": {
-    "@base-ui/react": "^1.0.0"
+    "@base-ui/react": "^1.0.0",
+    "@usermap/sdk-core": "workspace:*"
   }
 }

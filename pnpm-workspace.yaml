@@ -1,2 +1,6 @@
 packages:
+  - 'usermap-sdk-core'
   - 'usermap-sdk-react'
+  - 'usermap-sdk-react-native'
+  - 'example-react-native'
+  - 'example-react'

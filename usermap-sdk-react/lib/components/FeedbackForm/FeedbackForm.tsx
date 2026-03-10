@@ -8,9 +8,11 @@ import { useSubmitFeedback } from '../../hooks/useSubmitFeedback';
 export interface FeedbackFormProps {
   title?: string;
   token: string;
+  /** Optional key-value tags to attach to every feedback submission. */
+  tags?: Record<string, string>;
 }
 
-export function FeedbackForm({ title = 'How do you like the app so far?', token }: FeedbackFormProps) {
+export function FeedbackForm({ title = 'How do you like the app so far?', token, tags }: FeedbackFormProps) {
   const [positiveOpen, setPositiveOpen] = useState(false);
   const [negativeOpen, setNegativeOpen] = useState(false);
   const [positiveFeedback, setPositiveFeedback] = useState('');
@@ -25,7 +27,7 @@ export function FeedbackForm({ title = 'How do you like the app so far?', token 
       setPositiveFeedback('');
       setNegativeFeedback('');
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error('Failed to submit feedback:', error);
     },
   });
@@ -36,6 +38,7 @@ export function FeedbackForm({ title = 'How do you like the app so far?', token 
       await submitFeedback({
         sentiment: 'positive',
         message: positiveFeedback,
+        tags,
       });
     } catch (error) {
       // Error is already handled by the hook
@@ -48,6 +51,7 @@ export function FeedbackForm({ title = 'How do you like the app so far?', token 
       await submitFeedback({
         sentiment: 'negative',
         message: negativeFeedback,
+        tags,
       });
     } catch (error) {
       // Error is already handled by the hook
@@ -59,6 +63,7 @@ export function FeedbackForm({ title = 'How do you like the app so far?', token 
     try {
       await submitFeedback({
         sentiment: 'positive',
+        tags,
       });
     } catch (error) {
       // Error is already handled by the hook
@@ -72,6 +77,7 @@ export function FeedbackForm({ title = 'How do you like the app so far?', token 
     try {
       await submitFeedback({
         sentiment: 'negative',
+        tags,
       });
     } catch (error) {
       // Error is already handled by the hook
